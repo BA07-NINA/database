@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
-from src.models import Base
+from src.models import Base, Deployment
 from src.db import engine, get_db
 
 app = FastAPI()
