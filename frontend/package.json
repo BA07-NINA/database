@@ -7,10 +7,12 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate": "tsr generate"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.1.1",
+    "@tanstack/react-router": "^1.99.6",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.474.0",
@@ -21,6 +23,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
+    "@tanstack/router-devtools": "^1.99.6",
+    "@tanstack/router-plugin": "^1.99.6",
     "@types/node": "^22.13.1",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
