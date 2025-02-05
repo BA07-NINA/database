@@ -1,0 +1,18 @@
+# Changes here will be overwritten by Copier
+_commit: v0.0.2
+_src_path: gh:ninanor/python-template
+author_name: BA07-NINA
+debug: true
+default_branch_name: main
+email: ba07-nina@nina.no
+gis: false
+ldap: false
+project_name: PAM
+project_slug: pam
+queue: false
+repo_name: pam
+repo_org: BA07-NINA
+rest: true
+template_type: django
+type_annotations: true
+ui: false
