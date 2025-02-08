@@ -1,3 +1,4 @@
+import Breadcrumbs from '@/components/Breadcrumbs'
 import Sidebar from '@/components/Sidebar'
 import { createRootRoute, Outlet } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/router-devtools'
@@ -8,7 +9,10 @@ export const Route = createRootRoute({
       <div className='min-w-full min-h-10 bg-green-500'></div>
       <div className='flex'>
         <Sidebar />
+        <div className='flex-1'>
+        <Breadcrumbs />
         <Outlet />
+        </div>
       </div>
     </div>
   ),
