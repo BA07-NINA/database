@@ -4,11 +4,10 @@ from sqlalchemy.orm import Session
 from db import engine
 from models import Media, Deployment
 
-# Define the directory containing the media files
-# Get the script's directory
+# Script's directory
 base_dir = os.path.dirname(os.path.abspath(__file__))
 
-# Define a relative path from the script's location
+# Relative path from the script's location
 media_dir = os.path.join(base_dir, "../../exampledata/conf_20240314_TABMON")
 print(f"Resolved media directory: {media_dir}")
 
