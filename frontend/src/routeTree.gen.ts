@@ -11,14 +11,28 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as AboutImport } from './routes/about'
+import { Route as DevicesImport } from './routes/devices'
+import { Route as DeviceFilesImport } from './routes/deviceFiles'
+import { Route as DeviceDashboardImport } from './routes/deviceDashboard'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
 
-const AboutRoute = AboutImport.update({
-  id: '/about',
-  path: '/about',
+const DevicesRoute = DevicesImport.update({
+  id: '/devices',
+  path: '/devices',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DeviceFilesRoute = DeviceFilesImport.update({
+  id: '/deviceFiles',
+  path: '/deviceFiles',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DeviceDashboardRoute = DeviceDashboardImport.update({
+  id: '/deviceDashboard',
+  path: '/deviceDashboard',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -39,11 +53,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutImport
+    '/deviceDashboard': {
+      id: '/deviceDashboard'
+      path: '/deviceDashboard'
+      fullPath: '/deviceDashboard'
+      preLoaderRoute: typeof DeviceDashboardImport
+      parentRoute: typeof rootRoute
+    }
+    '/deviceFiles': {
+      id: '/deviceFiles'
+      path: '/deviceFiles'
+      fullPath: '/deviceFiles'
+      preLoaderRoute: typeof DeviceFilesImport
+      parentRoute: typeof rootRoute
+    }
+    '/devices': {
+      id: '/devices'
+      path: '/devices'
+      fullPath: '/devices'
+      preLoaderRoute: typeof DevicesImport
       parentRoute: typeof rootRoute
     }
   }
@@ -53,37 +81,47 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/deviceDashboard': typeof DeviceDashboardRoute
+  '/deviceFiles': typeof DeviceFilesRoute
+  '/devices': typeof DevicesRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/deviceDashboard': typeof DeviceDashboardRoute
+  '/deviceFiles': typeof DeviceFilesRoute
+  '/devices': typeof DevicesRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/deviceDashboard': typeof DeviceDashboardRoute
+  '/deviceFiles': typeof DeviceFilesRoute
+  '/devices': typeof DevicesRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about'
+  fullPaths: '/' | '/deviceDashboard' | '/deviceFiles' | '/devices'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about'
-  id: '__root__' | '/' | '/about'
+  to: '/' | '/deviceDashboard' | '/deviceFiles' | '/devices'
+  id: '__root__' | '/' | '/deviceDashboard' | '/deviceFiles' | '/devices'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
+  DeviceDashboardRoute: typeof DeviceDashboardRoute
+  DeviceFilesRoute: typeof DeviceFilesRoute
+  DevicesRoute: typeof DevicesRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
+  DeviceDashboardRoute: DeviceDashboardRoute,
+  DeviceFilesRoute: DeviceFilesRoute,
+  DevicesRoute: DevicesRoute,
 }
 
 export const routeTree = rootRoute
@@ -97,14 +135,22 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/about"
+        "/deviceDashboard",
+        "/deviceFiles",
+        "/devices"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/about": {
-      "filePath": "about.tsx"
+    "/deviceDashboard": {
+      "filePath": "deviceDashboard.tsx"
+    },
+    "/deviceFiles": {
+      "filePath": "deviceFiles.tsx"
+    },
+    "/devices": {
+      "filePath": "devices.tsx"
     }
   }
 }
