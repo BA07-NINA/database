@@ -1,8 +1,3 @@
-import sys
-import os
-
-sys.path.append(os.path.dirname(os.path.abspath(__file__)) + "/../..")
-
 import os
 from datetime import datetime
 from sqlalchemy.orm import Session
@@ -10,8 +5,13 @@ from db import engine
 from models import Media, Deployment
 
 # Define the directory containing the media files
-media_dir = "../exampledata/conf_20240314_TABMON"
-print(f"Media directory: {media_dir}")
+# Get the script's directory
+base_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Define a relative path from the script's location
+media_dir = os.path.join(base_dir, "../../exampledata/conf_20240314_TABMON")
+print(f"Resolved media directory: {media_dir}")
+
 
 # Default deployment ID for this seeding (ensure this exists in the database)
 DEFAULT_DEPLOYMENT_ID = "DEP1"  # Replace with an actual deployment ID from your database
