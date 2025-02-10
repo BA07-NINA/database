@@ -21,8 +21,8 @@ function Breadcrumbs() {
             </li>
             <li>
               <Link 
-                to="/about" 
-                className={`hover:underline ${location.pathname === '/about' ? 'font-bold text-black' : 'text-black'}`}
+                to="/" 
+                className={`hover:underline ${location.pathname === '/' ? 'font-bold text-black' : 'text-black'}`}
               >
                 About
               </Link>
