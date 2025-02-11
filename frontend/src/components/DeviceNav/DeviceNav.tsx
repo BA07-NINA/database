@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router'
 
-const DeviceNav = () => {
+function DeviceNav() {
   return (
     <nav className="device-nav">
       <ul>
