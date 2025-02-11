@@ -16,7 +16,7 @@ export const devicesQueryOptions = queryOptions<Device[]>({
     queryFn: fetchDevices, // The function to fetch data
 })
 
-const fetchDeviceById = async (id: string) => {
+const fetchDeviceById = async (id: string): Promise<Device> => {
     const response = await fetch(`${API_URL}/${id}`);
     if (!response.ok) {
       throw new Error(`Device not found (ID: ${id})`);
@@ -24,7 +24,7 @@ const fetchDeviceById = async (id: string) => {
     return response.json();
 };
 
-export const deviceQueryOptions = (deviceId: string) => queryOptions({
+export const deviceQueryOptions = (deviceId: string) => queryOptions<Device>({
     queryKey: ['device', deviceId],
     queryFn: () => fetchDeviceById(deviceId),
 });
