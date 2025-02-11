@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { devicesQueryOptions } from '@/api/query'
 import {
   Table,
@@ -15,9 +16,11 @@ import {
   type SortingState,
   useReactTable,
 } from "@tanstack/react-table"
+import { TbArrowsUpDown } from "react-icons/tb";
 import { Device } from '@/types'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
+import { Button } from '@/components/ui/button';
 
 export const Route = createFileRoute('/devices/')({
   loader: async ({ context: { queryClient } }) =>  await queryClient.prefetchQuery(devicesQueryOptions),
@@ -25,42 +28,117 @@ export const Route = createFileRoute('/devices/')({
 })
 
 function RouteComponent() {
-  const { data: devices } = useSuspenseQuery(devicesQueryOptions)
+  const { data } = useSuspenseQuery(devicesQueryOptions)
+
+  const [sorting, setSorting] = useState<SortingState>([])
+
+  const columns: ColumnDef<Device>[] = [
+    {
+      accessorKey: "id",
+      header: ({ column }) => (
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")} className="w-full justify-start">
+          Device
+          <TbArrowsUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      ),
+      cell: ({ row }) => (
+        <Link to="/devices/$deviceId" params={{ deviceId: row.original.id }} className="text-blue-500 hover:underline">
+          {row.original.id}
+        </Link>
+      ),
+    },
+    {
+      accessorKey: "project",
+      header: ({ column }) => (
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")} className="w-full justify-start">
+          Project
+          <TbArrowsUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      ),
+    },
+    {
+      accessorKey: "startDate",
+      header: ({ column }) => (
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")} className="w-full justify-start">
+          Start Date
+          <TbArrowsUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      ),
+    },
+    {
+      accessorKey: "endDate",
+      header: ({ column }) => (
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")} className="w-full justify-start">
+          End Date
+          <TbArrowsUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      ),
+    },
+    {
+      accessorKey: "lastUpload",
+      header: ({ column }) => (
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")} className="w-full justify-start">
+          Last Upload
+          <TbArrowsUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      ),
+    },
+    {
+      accessorKey: "batteryLevel",
+      header: ({ column }) => (
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")} className="w-full justify-start">
+          Battery Level
+          <TbArrowsUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      ),
+      cell: ({ row }) => `${row.original.batteryLevel}%`,
+    },
+    {
+      accessorKey: "folderSize",
+      header: ({ column }) => (
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")} className="w-full justify-start">
+          Folder Size
+          <TbArrowsUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      ),
+    },
+  ]
+
+  const table = useReactTable({
+    data: data,
+    columns,
+    state: {
+      sorting,
+    },
+    onSortingChange: setSorting,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+  })
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-[100px]">Device</TableHead>
-          <TableHead>Project</TableHead>
-          <TableHead>Start Date</TableHead>
-          <TableHead>End Date</TableHead>
-          <TableHead>Last Upload</TableHead>
-          <TableHead>Battery Level</TableHead>
-          <TableHead>Folder Size</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {devices.map((device: Device) => (
-          <TableRow key={device.id}>
-            <TableCell className="font-medium">
-              <Link
-                to="/devices/$deviceId"
-                params={{ deviceId: device.id }}
-                className="text-blue-500 hover:underline"
-              >
-                {device.id}
-              </Link>
-            </TableCell>
-            <TableCell>{device.project}</TableCell>
-            <TableCell>{device.startDate}</TableCell>
-            <TableCell>{device.endDate}</TableCell>
-            <TableCell>{device.lastUpload}</TableCell>
-            <TableCell>{device.batteryLevel}%</TableCell>
-            <TableCell>{device.folderSize}</TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <div className="rounded-md border m-5 shadow-md">
+      <Table>
+        <TableHeader>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <TableRow key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <TableHead key={header.id} className="px-0 py-0">
+                  {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                </TableHead>
+              ))}
+            </TableRow>
+          ))}
+        </TableHeader>
+        <TableBody>
+          {table.getRowModel().rows.map((row) => (
+            <TableRow key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <TableCell key={cell.id} className="px-4 py-2">{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   )
 }
