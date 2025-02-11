@@ -1,6 +1,4 @@
 import { deviceQueryOptions } from '@/api/query';
-import DeviceNav from '@/components/DeviceNav'
-import { Device } from '@/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router'
 
