@@ -1,3 +1,4 @@
+import Breadcrumbs from '@/components/Breadcrumbs'
 import Sidebar from '@/components/Sidebar'
 import Navbar from '@/components/Navbar'
 import { createRootRoute, Outlet } from '@tanstack/react-router'
@@ -10,7 +11,10 @@ export const Route = createRootRoute({
       <div className='flex'>
     
         <Sidebar />
+        <div className='flex-1'>
+        <Breadcrumbs />
         <Outlet />
+        </div>
       </div>
     </div>
   ),
