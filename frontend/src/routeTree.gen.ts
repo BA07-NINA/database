@@ -15,6 +15,7 @@ import { Route as MapImport } from './routes/map'
 import { Route as IndexImport } from './routes/index'
 import { Route as DevicesIndexImport } from './routes/devices/index'
 import { Route as DevicesDeviceIdIndexImport } from './routes/devices/$deviceId/index'
+import { Route as DevicesDeviceIdAudioFileIdImport } from './routes/devices/$deviceId/$audioFileId'
 
 // Create/Update Routes
 
@@ -42,6 +43,14 @@ const DevicesDeviceIdIndexRoute = DevicesDeviceIdIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const DevicesDeviceIdAudioFileIdRoute = DevicesDeviceIdAudioFileIdImport.update(
+  {
+    id: '/devices/$deviceId/$audioFileId',
+    path: '/devices/$deviceId/$audioFileId',
+    getParentRoute: () => rootRoute,
+  } as any,
+)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -67,6 +76,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DevicesIndexImport
       parentRoute: typeof rootRoute
     }
+    '/devices/$deviceId/$audioFileId': {
+      id: '/devices/$deviceId/$audioFileId'
+      path: '/devices/$deviceId/$audioFileId'
+      fullPath: '/devices/$deviceId/$audioFileId'
+      preLoaderRoute: typeof DevicesDeviceIdAudioFileIdImport
+      parentRoute: typeof rootRoute
+    }
     '/devices/$deviceId/': {
       id: '/devices/$deviceId/'
       path: '/devices/$deviceId'
@@ -83,6 +99,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/map': typeof MapRoute
   '/devices': typeof DevicesIndexRoute
+  '/devices/$deviceId/$audioFileId': typeof DevicesDeviceIdAudioFileIdRoute
   '/devices/$deviceId': typeof DevicesDeviceIdIndexRoute
 }
 
@@ -90,6 +107,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/map': typeof MapRoute
   '/devices': typeof DevicesIndexRoute
+  '/devices/$deviceId/$audioFileId': typeof DevicesDeviceIdAudioFileIdRoute
   '/devices/$deviceId': typeof DevicesDeviceIdIndexRoute
 }
 
@@ -98,15 +116,32 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/map': typeof MapRoute
   '/devices/': typeof DevicesIndexRoute
+  '/devices/$deviceId/$audioFileId': typeof DevicesDeviceIdAudioFileIdRoute
   '/devices/$deviceId/': typeof DevicesDeviceIdIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/map' | '/devices' | '/devices/$deviceId'
+  fullPaths:
+    | '/'
+    | '/map'
+    | '/devices'
+    | '/devices/$deviceId/$audioFileId'
+    | '/devices/$deviceId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/map' | '/devices' | '/devices/$deviceId'
-  id: '__root__' | '/' | '/map' | '/devices/' | '/devices/$deviceId/'
+  to:
+    | '/'
+    | '/map'
+    | '/devices'
+    | '/devices/$deviceId/$audioFileId'
+    | '/devices/$deviceId'
+  id:
+    | '__root__'
+    | '/'
+    | '/map'
+    | '/devices/'
+    | '/devices/$deviceId/$audioFileId'
+    | '/devices/$deviceId/'
   fileRoutesById: FileRoutesById
 }
 
@@ -114,6 +149,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   MapRoute: typeof MapRoute
   DevicesIndexRoute: typeof DevicesIndexRoute
+  DevicesDeviceIdAudioFileIdRoute: typeof DevicesDeviceIdAudioFileIdRoute
   DevicesDeviceIdIndexRoute: typeof DevicesDeviceIdIndexRoute
 }
 
@@ -121,6 +157,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   MapRoute: MapRoute,
   DevicesIndexRoute: DevicesIndexRoute,
+  DevicesDeviceIdAudioFileIdRoute: DevicesDeviceIdAudioFileIdRoute,
   DevicesDeviceIdIndexRoute: DevicesDeviceIdIndexRoute,
 }
 
@@ -137,6 +174,7 @@ export const routeTree = rootRoute
         "/",
         "/map",
         "/devices/",
+        "/devices/$deviceId/$audioFileId",
         "/devices/$deviceId/"
       ]
     },
@@ -148,6 +186,9 @@ export const routeTree = rootRoute
     },
     "/devices/": {
       "filePath": "devices/index.tsx"
+    },
+    "/devices/$deviceId/$audioFileId": {
+      "filePath": "devices/$deviceId/$audioFileId.tsx"
     },
     "/devices/$deviceId/": {
       "filePath": "devices/$deviceId/index.tsx"

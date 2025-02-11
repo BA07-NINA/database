@@ -25,7 +25,7 @@ function DeviceNav({ activeTab, setActiveTab }: DeviceNavProps) {
               activeTab === 'audioFiles' ? 'border-b-2 border-black' : ''
             }`}
           >
-            Files
+            Audio Files
           </button>
         </li>
       </ul>
