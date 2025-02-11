@@ -17,6 +17,7 @@ import { Route as DevicesIndexImport } from './routes/devices/index'
 import { Route as DevicesDeviceIdImport } from './routes/devices/$deviceId'
 import { Route as DeviceDeviceFilesImport } from './routes/device/deviceFiles'
 import { Route as DeviceDeviceDashboardImport } from './routes/device/deviceDashboard'
+import { Route as DevicesDeviceIdIndexImport } from './routes/devices/$deviceId/index'
 
 // Create/Update Routes
 
@@ -54,6 +55,12 @@ const DeviceDeviceDashboardRoute = DeviceDeviceDashboardImport.update({
   id: '/device/deviceDashboard',
   path: '/device/deviceDashboard',
   getParentRoute: () => rootRoute,
+} as any)
+
+const DevicesDeviceIdIndexRoute = DevicesDeviceIdIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DevicesDeviceIdRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -102,18 +109,38 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DevicesIndexImport
       parentRoute: typeof rootRoute
     }
+    '/devices/$deviceId/': {
+      id: '/devices/$deviceId/'
+      path: '/'
+      fullPath: '/devices/$deviceId/'
+      preLoaderRoute: typeof DevicesDeviceIdIndexImport
+      parentRoute: typeof DevicesDeviceIdImport
+    }
   }
 }
 
 // Create and export the route tree
+
+interface DevicesDeviceIdRouteChildren {
+  DevicesDeviceIdIndexRoute: typeof DevicesDeviceIdIndexRoute
+}
+
+const DevicesDeviceIdRouteChildren: DevicesDeviceIdRouteChildren = {
+  DevicesDeviceIdIndexRoute: DevicesDeviceIdIndexRoute,
+}
+
+const DevicesDeviceIdRouteWithChildren = DevicesDeviceIdRoute._addFileChildren(
+  DevicesDeviceIdRouteChildren,
+)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/map': typeof MapRoute
   '/device/deviceDashboard': typeof DeviceDeviceDashboardRoute
   '/device/deviceFiles': typeof DeviceDeviceFilesRoute
-  '/devices/$deviceId': typeof DevicesDeviceIdRoute
+  '/devices/$deviceId': typeof DevicesDeviceIdRouteWithChildren
   '/devices': typeof DevicesIndexRoute
+  '/devices/$deviceId/': typeof DevicesDeviceIdIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -121,8 +148,8 @@ export interface FileRoutesByTo {
   '/map': typeof MapRoute
   '/device/deviceDashboard': typeof DeviceDeviceDashboardRoute
   '/device/deviceFiles': typeof DeviceDeviceFilesRoute
-  '/devices/$deviceId': typeof DevicesDeviceIdRoute
   '/devices': typeof DevicesIndexRoute
+  '/devices/$deviceId': typeof DevicesDeviceIdIndexRoute
 }
 
 export interface FileRoutesById {
@@ -131,8 +158,9 @@ export interface FileRoutesById {
   '/map': typeof MapRoute
   '/device/deviceDashboard': typeof DeviceDeviceDashboardRoute
   '/device/deviceFiles': typeof DeviceDeviceFilesRoute
-  '/devices/$deviceId': typeof DevicesDeviceIdRoute
+  '/devices/$deviceId': typeof DevicesDeviceIdRouteWithChildren
   '/devices/': typeof DevicesIndexRoute
+  '/devices/$deviceId/': typeof DevicesDeviceIdIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -144,14 +172,15 @@ export interface FileRouteTypes {
     | '/device/deviceFiles'
     | '/devices/$deviceId'
     | '/devices'
+    | '/devices/$deviceId/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/map'
     | '/device/deviceDashboard'
     | '/device/deviceFiles'
-    | '/devices/$deviceId'
     | '/devices'
+    | '/devices/$deviceId'
   id:
     | '__root__'
     | '/'
@@ -160,6 +189,7 @@ export interface FileRouteTypes {
     | '/device/deviceFiles'
     | '/devices/$deviceId'
     | '/devices/'
+    | '/devices/$deviceId/'
   fileRoutesById: FileRoutesById
 }
 
@@ -168,7 +198,7 @@ export interface RootRouteChildren {
   MapRoute: typeof MapRoute
   DeviceDeviceDashboardRoute: typeof DeviceDeviceDashboardRoute
   DeviceDeviceFilesRoute: typeof DeviceDeviceFilesRoute
-  DevicesDeviceIdRoute: typeof DevicesDeviceIdRoute
+  DevicesDeviceIdRoute: typeof DevicesDeviceIdRouteWithChildren
   DevicesIndexRoute: typeof DevicesIndexRoute
 }
 
@@ -177,7 +207,7 @@ const rootRouteChildren: RootRouteChildren = {
   MapRoute: MapRoute,
   DeviceDeviceDashboardRoute: DeviceDeviceDashboardRoute,
   DeviceDeviceFilesRoute: DeviceDeviceFilesRoute,
-  DevicesDeviceIdRoute: DevicesDeviceIdRoute,
+  DevicesDeviceIdRoute: DevicesDeviceIdRouteWithChildren,
   DevicesIndexRoute: DevicesIndexRoute,
 }
 
@@ -212,10 +242,17 @@ export const routeTree = rootRoute
       "filePath": "device/deviceFiles.tsx"
     },
     "/devices/$deviceId": {
-      "filePath": "devices/$deviceId.tsx"
+      "filePath": "devices/$deviceId.tsx",
+      "children": [
+        "/devices/$deviceId/"
+      ]
     },
     "/devices/": {
       "filePath": "devices/index.tsx"
+    },
+    "/devices/$deviceId/": {
+      "filePath": "devices/$deviceId/index.tsx",
+      "parent": "/devices/$deviceId"
     }
   }
 }
