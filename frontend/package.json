@@ -8,13 +8,14 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "generate": "tsr generate", 
+    "generate": "tsr generate",
     "server": "json-server --watch db.json --port 3001"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.1.1",
     "@tanstack/react-query": "^5.66.0",
     "@tanstack/react-router": "^1.99.6",
+    "@tanstack/react-table": "^8.20.6",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.474.0",
@@ -41,7 +42,7 @@
     "json-server": "^1.0.0-beta.3",
     "postcss": "^8.5.1",
     "tailwindcss": "^3.4.17",
-    "typescript": "~5.6.2",
+    "typescript": "^5.7.3",
     "typescript-eslint": "^8.18.2",
     "vite": "^6.0.5"
   }

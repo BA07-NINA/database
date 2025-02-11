@@ -7,6 +7,14 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import {
+  type ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  getSortedRowModel,
+  type SortingState,
+  useReactTable,
+} from "@tanstack/react-table"
 import { Device } from '@/types'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute, Link } from '@tanstack/react-router'
@@ -30,7 +38,6 @@ function RouteComponent() {
           <TableHead>Last Upload</TableHead>
           <TableHead>Battery Level</TableHead>
           <TableHead>Folder Size</TableHead>
-          <TableHead>Action</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -51,7 +58,6 @@ function RouteComponent() {
             <TableCell>{device.lastUpload}</TableCell>
             <TableCell>{device.batteryLevel}%</TableCell>
             <TableCell>{device.folderSize}</TableCell>
-            <TableCell>{device.action}</TableCell>
           </TableRow>
         ))}
       </TableBody>
