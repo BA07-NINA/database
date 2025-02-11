@@ -12,8 +12,9 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as MapImport } from './routes/map'
-import { Route as DevicesImport } from './routes/devices'
 import { Route as IndexImport } from './routes/index'
+import { Route as DevicesIndexImport } from './routes/devices/index'
+import { Route as DevicesDeviceIdImport } from './routes/devices/$deviceId'
 import { Route as DeviceDeviceFilesImport } from './routes/device/deviceFiles'
 import { Route as DeviceDeviceDashboardImport } from './routes/device/deviceDashboard'
 
@@ -25,15 +26,21 @@ const MapRoute = MapImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const DevicesRoute = DevicesImport.update({
-  id: '/devices',
-  path: '/devices',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DevicesIndexRoute = DevicesIndexImport.update({
+  id: '/devices/',
+  path: '/devices/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DevicesDeviceIdRoute = DevicesDeviceIdImport.update({
+  id: '/devices/$deviceId',
+  path: '/devices/$deviceId',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -60,13 +67,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/devices': {
-      id: '/devices'
-      path: '/devices'
-      fullPath: '/devices'
-      preLoaderRoute: typeof DevicesImport
-      parentRoute: typeof rootRoute
-    }
     '/map': {
       id: '/map'
       path: '/map'
@@ -88,6 +88,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DeviceDeviceFilesImport
       parentRoute: typeof rootRoute
     }
+    '/devices/$deviceId': {
+      id: '/devices/$deviceId'
+      path: '/devices/$deviceId'
+      fullPath: '/devices/$deviceId'
+      preLoaderRoute: typeof DevicesDeviceIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/devices/': {
+      id: '/devices/'
+      path: '/devices'
+      fullPath: '/devices'
+      preLoaderRoute: typeof DevicesIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -95,68 +109,76 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/devices': typeof DevicesRoute
   '/map': typeof MapRoute
   '/device/deviceDashboard': typeof DeviceDeviceDashboardRoute
   '/device/deviceFiles': typeof DeviceDeviceFilesRoute
+  '/devices/$deviceId': typeof DevicesDeviceIdRoute
+  '/devices': typeof DevicesIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/devices': typeof DevicesRoute
   '/map': typeof MapRoute
   '/device/deviceDashboard': typeof DeviceDeviceDashboardRoute
   '/device/deviceFiles': typeof DeviceDeviceFilesRoute
+  '/devices/$deviceId': typeof DevicesDeviceIdRoute
+  '/devices': typeof DevicesIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/devices': typeof DevicesRoute
   '/map': typeof MapRoute
   '/device/deviceDashboard': typeof DeviceDeviceDashboardRoute
   '/device/deviceFiles': typeof DeviceDeviceFilesRoute
+  '/devices/$deviceId': typeof DevicesDeviceIdRoute
+  '/devices/': typeof DevicesIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/devices'
     | '/map'
     | '/device/deviceDashboard'
     | '/device/deviceFiles'
+    | '/devices/$deviceId'
+    | '/devices'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/devices'
     | '/map'
     | '/device/deviceDashboard'
     | '/device/deviceFiles'
+    | '/devices/$deviceId'
+    | '/devices'
   id:
     | '__root__'
     | '/'
-    | '/devices'
     | '/map'
     | '/device/deviceDashboard'
     | '/device/deviceFiles'
+    | '/devices/$deviceId'
+    | '/devices/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DevicesRoute: typeof DevicesRoute
   MapRoute: typeof MapRoute
   DeviceDeviceDashboardRoute: typeof DeviceDeviceDashboardRoute
   DeviceDeviceFilesRoute: typeof DeviceDeviceFilesRoute
+  DevicesDeviceIdRoute: typeof DevicesDeviceIdRoute
+  DevicesIndexRoute: typeof DevicesIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DevicesRoute: DevicesRoute,
   MapRoute: MapRoute,
   DeviceDeviceDashboardRoute: DeviceDeviceDashboardRoute,
   DeviceDeviceFilesRoute: DeviceDeviceFilesRoute,
+  DevicesDeviceIdRoute: DevicesDeviceIdRoute,
+  DevicesIndexRoute: DevicesIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -170,17 +192,15 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/devices",
         "/map",
         "/device/deviceDashboard",
-        "/device/deviceFiles"
+        "/device/deviceFiles",
+        "/devices/$deviceId",
+        "/devices/"
       ]
     },
     "/": {
       "filePath": "index.tsx"
-    },
-    "/devices": {
-      "filePath": "devices.tsx"
     },
     "/map": {
       "filePath": "map.tsx"
@@ -190,6 +210,12 @@ export const routeTree = rootRoute
     },
     "/device/deviceFiles": {
       "filePath": "device/deviceFiles.tsx"
+    },
+    "/devices/$deviceId": {
+      "filePath": "devices/$deviceId.tsx"
+    },
+    "/devices/": {
+      "filePath": "devices/index.tsx"
     }
   }
 }
