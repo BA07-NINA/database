@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import DeviceDetailPage from './-deviceDetailPage';
+import DeviceDetailPage from './-devicePage';
 import { audioFilesQueryOptions, deviceQueryOptions } from '@/api/query';
 
 export const Route = createFileRoute('/devices/$deviceId/')({
