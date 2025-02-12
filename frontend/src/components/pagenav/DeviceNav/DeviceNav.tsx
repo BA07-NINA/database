@@ -1,5 +1,4 @@
 interface DeviceNavProps {
-  deviceId: string;
   activeTab: 'details' | 'audioFiles';
   setActiveTab: (tab: 'details' | 'audioFiles') => void;
 }
