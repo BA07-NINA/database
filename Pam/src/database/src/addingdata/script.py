@@ -2,9 +2,10 @@ from datetime import datetime, timedelta
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import Base, Deployment, Media, Observation, Device, SoundQuality, Annotation, User
+import os
 
 # Database connection URL
-DATABASE_URL = "postgresql+psycopg2://noah:noah@localhost:5432/database"  # Replace with your database URL
+DATABASE_URL = os.environ("DATABASE_URL") #"postgresql+psycopg2://noah:noah@localhost:5432/database"  # Replace with your database URL
 
 # Create engine and session
 engine = create_engine(DATABASE_URL, echo=False)

@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 # Correct connection string
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+psycopg2://noah:noah@localhost:5432/database")
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 
 # Engine

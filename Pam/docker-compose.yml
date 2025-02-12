@@ -31,7 +31,6 @@ x-django: &django
   environment:
     <<: *django-env
 
-
 x-django-prod: &django-prod
   <<: *django
   depends_on:
@@ -55,6 +54,14 @@ x-django-dev: &django-dev
   #command: python -m pdb -c continue manage.py runserver 0.0.0.0:8000 --nothreading --noreload
 
 services:
+  postgres:
+    image: postgres:16
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - 5432:5432
   django:
     <<: *django-prod
     environment:
@@ -72,19 +79,6 @@ services:
     environment:
       <<: *django-dev-env
       DJANGO_MIGRATE: 1
-
-
-
-
-
-  postgres:
-    image: postgres:16
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    environment:
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    ports:
-      - 5432:5432
 
   nginx:
     build:
