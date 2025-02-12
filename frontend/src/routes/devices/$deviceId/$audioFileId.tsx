@@ -1,5 +1,4 @@
 import { audioFileQueryOptions } from '@/api/query'
-import { Button } from '@/components/ui/button'
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 
