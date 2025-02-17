@@ -7,4 +7,13 @@ export type Device = {
     batteryLevel: number;
     folderSize: string;
     action: string;
+    audioFiles: AudioFile[];
+};
+
+export type AudioFile = {
+    id: string;
+    config: string;
+    samplerate: number;
+    fileLength: string;
+    fileSize: number;
 };
